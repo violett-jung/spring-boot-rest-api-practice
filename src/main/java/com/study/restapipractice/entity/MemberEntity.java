@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "account")
 public class MemberEntity {
 
@@ -34,4 +35,5 @@ public class MemberEntity {
     @NotNull
     private Integer state; //활성화(1 활성화, 2 비활성화)
     private String description; //(옵션)설명
+
 }

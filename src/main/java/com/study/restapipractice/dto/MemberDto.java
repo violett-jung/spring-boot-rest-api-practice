@@ -2,6 +2,7 @@ package com.study.restapipractice.dto;
 
 import com.study.restapipractice.data.RoleType;
 import com.study.restapipractice.data.StateType;
+import com.study.restapipractice.entity.MemberEntity;
 import lombok.*;
 
 
@@ -23,4 +24,18 @@ public class MemberDto {
     private Integer role; //접근권한(1 관리자, 2 일반인)
     private Integer state; //활성화(1 활성화, 2 비활성화)
     private String description; //(옵션)설명
+
+    public MemberEntity toEntity(){
+        return MemberEntity.builder()
+                .id(this.id)
+                .pw(this.pw)
+                .name(this.name)
+                .email(this.email)
+                .hp(this.hp)
+                .role(this.role)
+                .state(this.state)
+                .description(this.description)
+                .build();
+    }
+
 }
