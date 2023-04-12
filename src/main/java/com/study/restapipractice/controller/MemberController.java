@@ -31,7 +31,12 @@ public class MemberController {
 
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
-
+    @GetMapping("/account")
+    public List<MemberEntity> getMembers(){
+        List<MemberEntity> members = memberRepository.findAll();
+        log.info(members.toString());
+        return members;
+    }
 
 
     //03-2. post : 로그인
