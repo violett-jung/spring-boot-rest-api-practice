@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @ToString
-@Table(name = "member")
+@Table(name = "account")
 public class MemberEntity {
 
     //02. db구축 - DB 테이블과 매핑할 MemberEntity생성

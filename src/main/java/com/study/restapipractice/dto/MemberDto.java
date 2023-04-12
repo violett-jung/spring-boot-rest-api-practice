@@ -13,7 +13,7 @@ import lombok.*;
 public class MemberDto {
 
     //01. db구축 - 데이터를 받아올 MemberDto 생성
-    //접근권한,활성화는 enum 타입으로 생성: 정해진 값만 사용해야 함
+    //접근권한,활성화는 해당 클래스를 만들고 멤버를 상수로 설정함: 값의 변경 없이 정해진 값만 사용
     private Long seq; //식별자
     private String id; //id
     private String pw; //pw
