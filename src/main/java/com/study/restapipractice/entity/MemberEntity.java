@@ -29,7 +29,9 @@ public class MemberEntity {
     @NotNull
     private String email; //메일주소
     private String hp; //(옵션)폰번호
-    private RoleType roleType; //접근권한(1 관리자, 2 일반인)
-    private StateType state; //활성화(1 활성화, 2 비활성화)
+    @NotNull
+    private Integer role; //접근권한(1 관리자, 2 일반인)
+    @NotNull
+    private Integer state; //활성화(1 활성화, 2 비활성화)
     private String description; //(옵션)설명
 }

@@ -1,18 +1,12 @@
 package com.study.restapipractice.data;
 
-public enum RoleType {
+import lombok.Getter;
 
-    ADMIN("1"),
-    USER("2");
+@Getter
+public class RoleType {
 
-    private final String code;
+    private static final Integer ADMIN = 1;
+    private static final Integer USER = 2;
 
-    private RoleType(String code){
-        this.code = code;
-    }
-
-    public String getCode(){
-        return code;
-    }
 
 }

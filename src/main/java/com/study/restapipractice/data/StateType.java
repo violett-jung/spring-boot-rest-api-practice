@@ -1,17 +1,10 @@
 package com.study.restapipractice.data;
 
-public enum StateType {
+import lombok.Getter;
 
-    ACTIVE("1"),
-    INACTIVE("2");
+@Getter
+public class StateType {
 
-    private final String code;
-
-    private StateType(String code){
-        this.code = code;
-    }
-
-    public String getCode(){
-        return code;
-    }
+    private static final Integer ACTIVE = 1;
+    private static final Integer INACTIVE = 2;
 }
