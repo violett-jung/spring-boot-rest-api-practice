@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class MemberDto {
 
     //01. db구축 - 데이터를 받아올 MemberDto 생성
