@@ -1,5 +1,7 @@
 package com.study.restapipractice.exception;
 
+import com.study.restapipractice.exception.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,7 +11,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /*전역적으로 예외 처리가능
 * @Controller 붙은 컨트롤러에서 발생하는 예외 처리
 * 프로젝트 당 하나만 관리하는 것이 권장됨(Selector 사용 시 성능 영향)*/
+@Slf4j
 public class GlobalExceptionHandler {
+    @ExceptionHandler(AppException.class) //AppException.class이 발생헀을 경우 예외처리
+    public ResponseEntity<ErrorResponse> appExceptionHandler(AppException e){
+        log.error("error : ", e.getErrorCode() );
+        return ErrorResponse.toResponseEntity(e.getErrorCode());
+    }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> runtimeExceptionHandler(RuntimeException e){

@@ -3,6 +3,8 @@ package com.study.restapipractice.service;
 import com.study.restapipractice.dao.MemberDao;
 import com.study.restapipractice.dto.MemberDto;
 import com.study.restapipractice.entity.MemberEntity;
+import com.study.restapipractice.exception.AppException;
+import com.study.restapipractice.exception.ErrorCode;
 import com.study.restapipractice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,7 @@ public class MemberService {
         //need003. id 중복 처리 -> error
         memberRepository.findById(memberEntity.getId())
                 .ifPresent(member -> {
-                    throw new RuntimeException(memberEntity.getId() + "는 이미 있습니다");
+                    throw new AppException(ErrorCode.ID_DUPLICATED);
                 });
         log.info(memberEntity.toString());
 
