@@ -28,12 +28,22 @@ public class MemberController {
     * 03-6. get: 회원목록다운로드
     * */
 
+    //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
     @Autowired
     private MemberRepository memberRepository;
 
     //service 단계 추가
-    @Autowired
     private MemberService memberService;
+    //의존성주입-생성자추가방식
+    /* 이방식 대신 @RequiredArgsConstructor 사용해도 됨
+     * 초기화 되지않은 final 필드, @NonNull 이 붙은 필드에 대해 생성자를 생성
+     * @Autowired를 사용하지 않고 의존성 주입 가능
+     * -> private final MemberService memberService; //이처럼 final 처리해야함
+     */
+    @Autowired
+    public MemberController(MemberService memberService){
+        this.memberService = memberService;
+    }
 
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
@@ -58,7 +68,7 @@ public class MemberController {
     //회원등록 만들면서 controller에서 전부 처리하던 service, repository 단계별 구분
     @PostMapping("/account")
     public ResponseEntity<?> createMember(@RequestBody MemberDto memberDto){
-
+        memberService.registerMember(memberDto);
         return null;
     }
 
