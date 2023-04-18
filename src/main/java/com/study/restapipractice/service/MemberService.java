@@ -39,14 +39,13 @@ public class MemberService {
                 .ifPresent(member -> {
                     throw new RuntimeException(memberEntity.getId() + "는 이미 있습니다");
                 });
+        log.info(memberEntity.toString());
 
         //need03-2. null 체크(옵션 제외)
 
-
-        log.info(memberEntity.toString());
-        MemberEntity saveMember = memberRepository.save(memberEntity);
-
-        log.info(saveMember.toString());
+        //예외처리 통과 시 db저장: dao -> repository
+        MemberEntity saved = memberDao.registerMember(memberEntity);
+        log.info(saved.toString());
         return null;
     }
 
