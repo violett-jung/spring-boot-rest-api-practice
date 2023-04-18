@@ -40,14 +40,15 @@ public class MemberController {
      * @Autowired를 사용하지 않고 의존성 주입 가능
      * -> private final MemberService memberService; //이처럼 final 처리해야함
      */
+
     @Autowired
     public MemberController(MemberService memberService){
         this.memberService = memberService;
     }
-
+    //need001~need004
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
-    //need. 예외처리-회원이 없는 경우,서버에러
+    //need001. 예외처리-회원이 없는 경우,서버에러
     @GetMapping("/account")
     public List<MemberEntity> getMembers(){
         List<MemberEntity> members = memberRepository.findAll();
@@ -57,7 +58,7 @@ public class MemberController {
     }
 
     //03-1-2. 회원조회
-    //need. 예외처리-id에 해당하는 회원이 없는 경우,서버에러
+    //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러
     @GetMapping("/account/{id}")
     public MemberEntity getMember(@PathVariable("id") Long seq){
         MemberEntity memberEntity = memberRepository.findById(seq).get();

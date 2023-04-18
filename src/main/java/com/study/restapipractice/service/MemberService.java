@@ -28,20 +28,20 @@ public class MemberService {
 
     //03-1. find : 회원목록조회 및 회원조회
     //03-2. register : 회원등록
-    //need03-1. 예외처리-id가 중복되면 안됨
-    //need03-2. 예외처리-옵션 제외 항목들은 반드시 notnull
+    //need001. 예외처리-id가 중복되면 안됨
+    //need002. 예외처리-옵션 제외 항목들은 반드시 notnull
     public MemberDto registerMember(MemberDto memberDto){
         log.info(memberDto.toString());
         MemberEntity memberEntity = memberDto.toEntity();
 
-        //need03-1. id 중복 처리 ->중복시 500에러
+        //need003. id 중복 처리 -> error
         memberRepository.findById(memberEntity.getId())
                 .ifPresent(member -> {
                     throw new RuntimeException(memberEntity.getId() + "는 이미 있습니다");
                 });
         log.info(memberEntity.toString());
 
-        //need03-2. null 체크(옵션 제외)
+        //need004. null 체크(옵션 제외)
 
         //예외처리 통과 시 db저장: dao -> repository
         MemberEntity saved = memberDao.registerMember(memberEntity);
