@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     //쿼리 메소드 이용
     Optional<MemberEntity> findById(String id);
+
+    //로그인
+    Optional<MemberEntity> findByIdAndPw(String id, String pw);
 }

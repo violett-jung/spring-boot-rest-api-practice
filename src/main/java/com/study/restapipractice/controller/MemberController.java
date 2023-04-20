@@ -1,5 +1,6 @@
 package com.study.restapipractice.controller;
 
+import com.study.restapipractice.dto.LoginRequest;
 import com.study.restapipractice.dto.MemberDto;
 
 import com.study.restapipractice.entity.MemberEntity;
@@ -7,12 +8,10 @@ import com.study.restapipractice.repository.MemberRepository;
 import com.study.restapipractice.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -74,10 +73,18 @@ public class MemberController {
     }
 
     //03-3. post : 로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> loginMember(@RequestBody LoginRequest loginRequest){
+        memberService.authenticateMember(loginRequest);
+        return null;
+    }
 
 
     //03-4. put : 회원수정
+
+
     //03-5. delete : 회원삭제
+
     //03-6. get: 회원목록다운로드
 
 }
