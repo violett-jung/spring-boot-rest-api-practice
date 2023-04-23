@@ -40,6 +40,13 @@ public class MemberDao {
     };
 
     //03-4. modify : 회원수정
+    public void modifyMember(MemberEntity modifyEntity) {
+        MemberEntity saved = memberRepository.save(modifyEntity);
+        log.info(saved.toString());
+
+    }
+
+
 
 
     //03-5. remove : 회원삭제

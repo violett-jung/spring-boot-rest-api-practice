@@ -33,10 +33,12 @@ public class MemberService {
      * */
 
     //03-1. find : 회원목록조회 및 회원조회
+    //need001. 예외처리-회원이 없는 경우,서버에러
+    //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(409)
 
     //03-2. register : 회원등록
-    //need001. 예외처리-id가 중복되면 안됨
-    //need002. 예외처리-옵션 제외 항목들은 반드시 notnull
+    //need003. 예외처리-id가 중복되면 안됨
+    //need004. 예외처리-옵션 제외 항목들은 반드시 notnull
     public MemberDto registerMember(MemberDto memberDto){
         log.info(memberDto.toString());
         MemberEntity memberEntity = memberDto.toEntity();
@@ -63,7 +65,7 @@ public class MemberService {
     public MemberDto authenticateMember(LoginRequest loginRequest) {
         log.info(loginRequest.toString());
 
-        //예외처리
+        //예외처리 ->아직안됨
         Optional<MemberEntity> matchingMember = memberRepository.findByIdAndPw(loginRequest.getUserId(), loginRequest.getUserPw());
         log.info(matchingMember.toString());
 
@@ -75,15 +77,24 @@ public class MemberService {
 
     }
     //03-4. modify : 회원수정
-    public void modifyMember(Long seq, MemberDto memberDto) {
+    public void modifyMember(Long id, MemberDto memberDto) {
         //1.수정용 엔티티로 변환
+        MemberEntity modifyEntity = memberDto.toEntity();
 
         //2.대상 엔티티 조회
+        Optional<MemberEntity> matchingMember = memberRepository.findById(id);
+        MemberEntity memberEntity = matchingMember.get();
+        log.info(memberEntity.toString());
 
-        //3.예외처리
-        //need007. 존재하는 계정 아님
-        //need008. pathvariable로 받은 seq와 수정용엔티티의 seq가 다를 경우
+        memberEntity.setName(modifyEntity.getName());
+        //예외처리
+        //need008. 존재하는 계정 아님
+        //need009. pathvariable로 받은 seq와 수정용엔티티의 seq가 다를 경우
+        //need007. memberDto에 완전한 정보 담기지 않음
+        //need010. 입력하려는 데이터의 형식이 맞지 않을 때
 
+        //3. 업데이트
+        memberDao.modifyMember(memberEntity);
     }
 
     //03-5. remove : 회원삭제
