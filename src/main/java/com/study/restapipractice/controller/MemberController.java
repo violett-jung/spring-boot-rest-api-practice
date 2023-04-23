@@ -26,6 +26,7 @@ public class MemberController {
     * 03-5. delete : 회원삭제
     * 03-6. get: 회원목록다운로드
     * */
+    //need001~need006
 
     //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
     @Autowired
@@ -44,7 +45,6 @@ public class MemberController {
     public MemberController(MemberService memberService){
         this.memberService = memberService;
     }
-    //need001~need004
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
     //need001. 예외처리-회원이 없는 경우,서버에러
@@ -81,9 +81,16 @@ public class MemberController {
 
 
     //03-4. put : 회원수정
+    @PutMapping("/account/{id}")
+    public ResponseEntity<?> updateMember(@PathVariable("id") Long seq, @RequestBody MemberDto memberDto){
+        memberService.modifyMember(seq, memberDto);
+        return null;
+
+    }
 
 
     //03-5. delete : 회원삭제
+
 
     //03-6. get: 회원목록다운로드
 

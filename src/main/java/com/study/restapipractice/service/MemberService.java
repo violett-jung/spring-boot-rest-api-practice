@@ -75,6 +75,17 @@ public class MemberService {
 
     }
     //03-4. modify : 회원수정
+    public void modifyMember(Long seq, MemberDto memberDto) {
+        //1.수정용 엔티티로 변환
+
+        //2.대상 엔티티 조회
+
+        //3.예외처리
+        //need007. 존재하는 계정 아님
+        //need008. pathvariable로 받은 seq와 수정용엔티티의 seq가 다를 경우
+
+    }
+
     //03-5. remove : 회원삭제
     //03-6. download : 회원목록다운로드
 

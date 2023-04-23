@@ -38,8 +38,13 @@ public class MemberDao {
     public MemberEntity authenticateMember(MemberEntity authEntity){
        return null;
     };
+
     //03-4. modify : 회원수정
+
+
     //03-5. remove : 회원삭제
+
+
     //03-6. download : 회원목록다운로드
 
 
