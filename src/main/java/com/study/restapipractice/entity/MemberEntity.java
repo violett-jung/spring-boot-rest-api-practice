@@ -30,7 +30,6 @@ public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동생성
     private Long seq; //식별자
-
     @NotBlank
 //    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ID는 영어 대소문자와 숫자만 가능합니다.")
     private String id; //id

@@ -15,7 +15,12 @@ import lombok.*;
 public class MemberDto {
 
     //01. db구축 - 데이터를 받아올 MemberDto 생성
+    /* Entity 클래스에서는 검증 애너테이션을 사용X
+    * Entity 클래스는 데이터베이스 테이블과 매핑되는 객체이므로, 테이블의 제약조건과 일치하는 애너테이션을 사용할 필요없음
+    * DTO나 VO 등과 같은 데이터 전송 객체에서 검증 애너테이션을 사용하여 입력값의 유효성을 검사하고, 이후에 Entity 객체로 변환하여 DB에 저장
+    */
     //접근권한,활성화는 해당 클래스를 만들고 멤버를 상수로 설정함: 값의 변경 없이 정해진 값만 사용
+
     private Long seq; //식별자
     private String id; //id
     private String pw; //pw
