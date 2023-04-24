@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class RoleType {
 
-    private static final Integer ADMIN = 1;
-    private static final Integer USER = 2;
+    public static final Integer ADMIN = 1;
+    public static final Integer USER = 2;
 
 }

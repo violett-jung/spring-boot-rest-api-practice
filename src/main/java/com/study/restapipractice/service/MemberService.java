@@ -9,9 +9,12 @@ import com.study.restapipractice.exception.ErrorCode;
 import com.study.restapipractice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+import javax.xml.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +58,7 @@ public class MemberService {
         Optional<MemberEntity> member = memberDao.findMember(seq);
         log.info(member.toString());
 
-        //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
+        //--need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
         if(member.isEmpty()){
             throw new AppException(ErrorCode.MEMBER_NOT_FOUND);
         };
@@ -68,13 +71,14 @@ public class MemberService {
     }
 
 
-
     //03-2. register : 회원등록
     //need003. 예외처리-id가 중복되면 안됨
     //need004. 예외처리-옵션 제외 항목들은 반드시 notnull
     public MemberDto registerMember(MemberDto memberDto){
         log.info(memberDto.toString());
         MemberEntity memberEntity = memberDto.toEntity();
+
+        //need004. null 체크(옵션 제외) -> @Valid 이용한 검증
 
         //need003. id 중복 처리 -> error
         memberRepository.findById(memberEntity.getId())
@@ -83,11 +87,9 @@ public class MemberService {
                 });
         log.info(memberEntity.toString());
 
-        //need004. null 체크(옵션 제외)
-
         //예외처리 통과 시 db저장: dao -> repository
         MemberEntity saved = memberDao.registerMember(memberEntity);
-        log.info(saved.toString());
+        log.info("saved: " + saved.toString());
         return null;
     }
 

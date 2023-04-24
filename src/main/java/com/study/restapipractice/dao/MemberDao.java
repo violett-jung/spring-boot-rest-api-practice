@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class MemberDao {
     }
 
     //03-2. register : 회원등록
-    public MemberEntity registerMember(MemberEntity memberEntity) {
+    public MemberEntity registerMember(@Valid MemberEntity memberEntity) {
         MemberEntity saved = memberRepository.save(memberEntity);
         log.info(saved.toString());
         return saved;

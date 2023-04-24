@@ -27,7 +27,8 @@ public class MemberController {
     * 03-5. delete : 회원삭제
     * 03-6. get: 회원목록다운로드
     * */
-    //need001~need010
+    //need001~need011
+    //002번까지 처리
 
     //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
     @Autowired

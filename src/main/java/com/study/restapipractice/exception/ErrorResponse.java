@@ -3,9 +3,12 @@ package com.study.restapipractice.exception;
 import com.study.restapipractice.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -15,14 +18,30 @@ public class ErrorResponse {
     private final String error;
     private final String code;
     private final String message;
+    private final Map<String, String> errors;
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorcode){
-        return ResponseEntity.status(errorcode.getHttpStatus())
+    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode){
+        return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(ErrorResponse.builder()
-                        .status(errorcode.getHttpStatus().value())
-                        .code(errorcode.getHttpStatus().name())
-                        .error(errorcode.name())
-                        .message(errorcode.getMessage())
+                        .status(errorCode.getHttpStatus().value())
+                        .code(errorCode.getHttpStatus().name())
+                        .error(errorCode.name())
+                        .message(errorCode.getMessage())
                         .build());
     }
+
+    //@Valid 에러 발생 시
+    //400번 에러 발생
+    public static ResponseEntity<ErrorResponse> toResponseEntity(FieldError fieldError, ErrorCode errorCode){
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(ErrorResponse.builder()
+                        .status(errorCode.getHttpStatus().value())
+                        .code(errorCode.getHttpStatus().name())
+                        .error(errorCode.name())
+                        .message(fieldError.getDefaultMessage())
+                        .build());
+    }
+
+
+
 }

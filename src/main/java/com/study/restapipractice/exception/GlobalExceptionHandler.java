@@ -4,6 +4,9 @@ import com.study.restapipractice.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -19,6 +22,7 @@ public class GlobalExceptionHandler {
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
 
+    //RuntimeException 발생했는데 예외처리 못한 경우
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> runtimeExceptionHandler(RuntimeException e){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -28,6 +32,20 @@ public class GlobalExceptionHandler {
         * 메서드 체이닝: 메서드가 호출된 후에 자신의 객체를 반환함으로써, 다른 메서드 호출을 연결하여 사용가능
         * ResponseEntity 클래스에서 제공하는 빌더 메서드들은 대부분 ResponseEntity 빌더 자체를 반환하기 때문에 메서드 체이닝 가능
         * */
+
+    }
+
+    //@Valid를 이용한 검증
+    //@Valid를 통과하지 못하면 MethodArgumentNotValidException이 발생함
+    //검증 어노테이션 별로 지정해놨던 메시지 응답
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        BindingResult bindingResult = e.getBindingResult();
+//        String errorMessage = bindingResult.getFieldErrors().get(0).getDefaultMessage();
+        FieldError fieldError = bindingResult.getFieldErrors().get(0);
+
+        log.error("error : ", bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        return ErrorResponse.toResponseEntity(fieldError, ErrorCode.BAD_REQUEST_ERROR);
 
     }
 
