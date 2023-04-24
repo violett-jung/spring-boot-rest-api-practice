@@ -35,6 +35,7 @@ public class MemberService {
      * */
 
     //03-1. find : 회원목록조회 및 회원조회
+    //03-1-1. 회원목록조회
     //--need001. 회원목록이 없는 경우 처리 -> 200번 응답+빈 목록 반환 처리함
     public List<MemberDto> findMembers() {
         List<MemberEntity> foundMembers = memberDao.findMembers();
@@ -49,7 +50,24 @@ public class MemberService {
         return memberDtoList;
     }
 
-    //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
+    //03-1-2. 회원조회
+    public MemberDto findMember(Long seq) {
+        Optional<MemberEntity> member = memberDao.findMember(seq);
+        log.info(member.toString());
+
+        //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
+        if(member.isEmpty()){
+            throw new AppException(ErrorCode.MEMBER_NOT_FOUND);
+        };
+
+        //예외처리 통과 시
+        //entity -> dto로 변경
+        MemberDto memberDto = member.get().toDto();
+        log.info(memberDto.toString());
+        return memberDto;
+    }
+
+
 
     //03-2. register : 회원등록
     //need003. 예외처리-id가 중복되면 안됨
@@ -112,7 +130,8 @@ public class MemberService {
         memberDao.modifyMember(memberEntity);
     }
 
-   
+
+
 
     //03-5. remove : 회원삭제
 

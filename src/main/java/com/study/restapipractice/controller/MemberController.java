@@ -54,6 +54,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(memberDtoList);
     }
 
+//    //기존코드
 //    @GetMapping("/account")
 //    public List<MemberEntity> getMembers(){
 //        List<MemberEntity> members = memberRepository.findAll();
@@ -63,12 +64,18 @@ public class MemberController {
 //    }
 
     //03-1-2. 회원조회
-
     @GetMapping("/account/{id}")
-    public MemberEntity getMember(@PathVariable("id") Long seq){
-        MemberEntity memberEntity = memberRepository.findById(seq).get();
-        return memberEntity;
+    public ResponseEntity<MemberDto> getMember(@PathVariable("id") Long seq){
+        MemberDto memberDto = memberService.findMember(seq);
+        return ResponseEntity.status(HttpStatus.OK).body(memberDto);
     }
+
+//    //기존코드
+//    @GetMapping("/account/{id}")
+//    public MemberEntity getMember(@PathVariable("id") Long seq){
+//        MemberEntity memberEntity = memberRepository.findById(seq).get();
+//        return memberEntity;
+//    }
 
     //03-2. post : 회원등록
     //회원등록 만들면서 controller에서 전부 처리하던 service, repository 단계별 구분

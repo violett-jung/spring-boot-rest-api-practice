@@ -27,10 +27,18 @@ public class MemberDao {
      * */
 
     //03-1. find : 회원목록조회 및 회원조회
+    //03-1-1. 회원목록조회
     public List<MemberEntity> findMembers() {
         List<MemberEntity> members = memberRepository.findAll();
         log.info(members.toString());
         return members;
+    }
+
+    //03-1-2. 회원조회
+    public Optional<MemberEntity> findMember(Long seq) {
+        Optional<MemberEntity> member = memberRepository.findById(seq);
+        log.info(member.toString());
+        return member;
     }
 
     //03-2. register : 회원등록
