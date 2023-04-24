@@ -2,6 +2,7 @@ package com.study.restapipractice.entity;
 
 import com.study.restapipractice.data.RoleType;
 import com.study.restapipractice.data.StateType;
+import com.study.restapipractice.dto.MemberDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -36,4 +37,16 @@ public class MemberEntity {
     private Integer state; //활성화(1 활성화, 2 비활성화)
     private String description; //(옵션)설명
 
+    public MemberDto toDto(){
+        return MemberDto.builder()
+                .seq(this.seq)
+                .id(this.id)
+                .pw(this.pw)
+                .name(this.name)
+                .email(this.email)
+                .hp(this.hp)
+                .role(this.role)
+                .state(this.state)
+                .build();
+    }
 }

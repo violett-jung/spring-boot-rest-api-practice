@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,11 @@ public class MemberDao {
      * */
 
     //03-1. find : 회원목록조회 및 회원조회
+    public List<MemberEntity> findMembers() {
+        List<MemberEntity> members = memberRepository.findAll();
+        log.info(members.toString());
+        return members;
+    }
 
     //03-2. register : 회원등록
     public MemberEntity registerMember(MemberEntity memberEntity) {

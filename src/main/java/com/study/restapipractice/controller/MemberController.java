@@ -26,7 +26,7 @@ public class MemberController {
     * 03-5. delete : 회원삭제
     * 03-6. get: 회원목록다운로드
     * */
-    //need001~need006
+    //need001~need010
 
     //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
     @Autowired
@@ -48,12 +48,18 @@ public class MemberController {
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
     @GetMapping("/account")
-    public List<MemberEntity> getMembers(){
-        List<MemberEntity> members = memberRepository.findAll();
-        log.info(members.toString());
-
-        return members;
+    public List<MemberDto> getMembers(){
+        List<MemberDto> memberDtoList = memberService.findMembers();
+        return memberDtoList;
     }
+
+//    @GetMapping("/account")
+//    public List<MemberEntity> getMembers(){
+//        List<MemberEntity> members = memberRepository.findAll();
+//        log.info(members.toString());
+//
+//        return members;
+//    }
 
     //03-1-2. 회원조회
 
