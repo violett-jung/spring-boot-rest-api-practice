@@ -8,6 +8,7 @@ import com.study.restapipractice.repository.MemberRepository;
 import com.study.restapipractice.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +49,9 @@ public class MemberController {
     //03-1. get:  회원목록조회 및 회원조회
     //03-1-1. 회원목록조회
     @GetMapping("/account")
-    public List<MemberDto> getMembers(){
+    public ResponseEntity<List<MemberDto>> getMembers(){
         List<MemberDto> memberDtoList = memberService.findMembers();
-        return memberDtoList;
+        return ResponseEntity.status(HttpStatus.OK).body(memberDtoList);
     }
 
 //    @GetMapping("/account")

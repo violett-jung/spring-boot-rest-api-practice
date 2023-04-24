@@ -35,19 +35,21 @@ public class MemberService {
      * */
 
     //03-1. find : 회원목록조회 및 회원조회
-    //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(409)
+    //--need001. 회원목록이 없는 경우 처리 -> 200번 응답+빈 목록 반환 처리함
     public List<MemberDto> findMembers() {
         List<MemberEntity> foundMembers = memberDao.findMembers();
+
         //entity -> dto로 변경
         List<MemberDto> memberDtoList = new ArrayList<>();
-        foundMembers.forEach(m -> memberDtoList.add(m.toDto()));
+        foundMembers.forEach(m -> {
+                    memberDtoList.add(m.toDto());
+                });
         log.info(memberDtoList.toString());
 
-        //need001. 예외처리-회원이 없는 경우,서버에러 
-
-        //예외처리된 데이터 반환
         return memberDtoList;
     }
+
+    //need002. 예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
 
     //03-2. register : 회원등록
     //need003. 예외처리-id가 중복되면 안됨
@@ -113,6 +115,7 @@ public class MemberService {
    
 
     //03-5. remove : 회원삭제
+
     //03-6. download : 회원목록다운로드
 
 

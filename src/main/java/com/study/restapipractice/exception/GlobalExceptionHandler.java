@@ -21,8 +21,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> runtimeExceptionHandler(RuntimeException e){
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("내부 서버 에러입니다.");
 
         /* 추가공부
         * 메서드 체이닝: 메서드가 호출된 후에 자신의 객체를 반환함으로써, 다른 메서드 호출을 연결하여 사용가능
@@ -30,4 +30,5 @@ public class GlobalExceptionHandler {
         * */
 
     }
+
 }

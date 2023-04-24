@@ -47,6 +47,7 @@ public class MemberEntity {
                 .hp(this.hp)
                 .role(this.role)
                 .state(this.state)
+                .description(this.description)
                 .build();
     }
 }
