@@ -43,7 +43,7 @@ public class MemberDao {
     }
 
     //03-2. register : 회원등록
-    public MemberEntity registerMember(@Valid MemberEntity memberEntity) {
+    public MemberEntity registerMember(MemberEntity memberEntity) {
         MemberEntity saved = memberRepository.save(memberEntity);
         log.info(saved.toString());
         return saved;
