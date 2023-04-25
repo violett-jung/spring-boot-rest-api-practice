@@ -104,7 +104,6 @@ public class MemberController {
     public ResponseEntity<?> updateMember(@PathVariable("id") Long seq, @RequestBody MemberDto memberDto){
         memberService.modifyMember(seq, memberDto);
         return null;
-
     }
 
     //03-5. delete : 회원삭제

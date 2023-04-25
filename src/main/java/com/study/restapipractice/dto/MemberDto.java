@@ -3,7 +3,6 @@ package com.study.restapipractice.dto;
 import com.study.restapipractice.data.RoleType;
 import com.study.restapipractice.data.StateType;
 import com.study.restapipractice.entity.MemberEntity;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -27,27 +26,23 @@ public class MemberDto {
 
     private Long seq; //식별자
 
-    @NotBlank
+    @NotBlank //null,""," " 모두 안됨
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ID는 영어 대소문자와 숫자만 가능합니다.")
     private String id; //id
 
-    @NotEmpty
+    @NotBlank
     private String pw; //pw
 
-    @NotEmpty
+    @NotBlank
     private String name; //이름
 
-    @NotNull
+    @NotBlank
     @Email
     private String email; //메일주소
 
-//    @Pattern.List({
-//            @Pattern(regexp = "^$"), // 빈 문자열 허용
-//            @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "핸드폰 번호는 010-1234-5678 형식으로 입력해주세요.")
-//    })
     private String hp; //(옵션)폰번호
 
-    @NotNull
+    @NotNull //원래 null만 검증실패여야하는데 null,""," " 모두 검증실패(Integer타입이라서 그런건지)
     @Min(value = 1, message = "접근 권한은 1 또는 2이어야 합니다.")
     @Max(value = 2, message = "접근 권한은 1 또는 2이어야 합니다.")
     private Integer role; //접근권한(1 관리자, 2 일반인)
