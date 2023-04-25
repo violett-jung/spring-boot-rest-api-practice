@@ -1,5 +1,6 @@
 package com.study.restapipractice.service;
 
+import com.study.restapipractice.converter.CsvConverter;
 import com.study.restapipractice.dao.MemberDao;
 import com.study.restapipractice.dto.LoginRequest;
 import com.study.restapipractice.dto.MemberDto;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.xml.validation.Validator;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -147,11 +149,12 @@ public class MemberService {
        memberDao.removeMember(member.get());
     }
 
-
-
-
-
     //03-6. download : 회원목록다운로드
+    public byte[] exportMembersToBinary() throws IOException {
+        List<MemberDto> members = findMembers();
+        byte[] csvBytes = CsvConverter.convertToCsvBinary(members);
+        return csvBytes;
+    }
 
 
 

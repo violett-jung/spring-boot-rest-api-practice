@@ -115,13 +115,11 @@ public class MemberController {
     }
 
     //03-6. get: 회원목록다운로드
-    @GetMapping(value = "/download-binary", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<byte[]> downloadCsvBinary() throws IOException {
-        List<MemberDto> members = memberService.findMembers();
-        byte[] csvBytes = CsvConverter.convertToCsvBinary(members);
+        byte[] csvBytes = memberService.exportMembersToBinary();
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=members.csv");
         return ResponseEntity.ok().headers(headers).body(csvBytes);
     }
-
 }
