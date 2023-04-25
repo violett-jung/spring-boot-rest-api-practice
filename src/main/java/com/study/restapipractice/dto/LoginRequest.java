@@ -11,6 +11,6 @@ import lombok.ToString;
 @ToString
 public class LoginRequest {
 
-    private String userId;
-    private String userPw;
+    private String id;
+    private String pw;
 }

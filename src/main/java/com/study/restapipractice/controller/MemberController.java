@@ -83,19 +83,19 @@ public class MemberController {
     //회원등록 만들면서 controller에서 전부 처리하던 service, repository 단계별 구분
     @PostMapping("/account")
     public ResponseEntity<?> createMember(@RequestBody @Valid MemberDto memberDto){
-        memberService.registerMember(memberDto);
-        return null;
+        MemberDto savedMember = memberService.registerMember(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
     }
 
     //03-3. post : 로그인
     @PostMapping("/login")
     public ResponseEntity<?> loginMember(@RequestBody LoginRequest loginRequest){
-        memberService.authenticateMember(loginRequest);
-        return null;
+        log.info(loginRequest.toString());
+        MemberDto memberDto = memberService.authenticateMember(loginRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(memberDto);
     }
 
-
-    //03-4. put : 회원수정
+    //03-4. put : 회원수정 //고쳐야함
     @PutMapping("/account/{id}")
     public ResponseEntity<?> updateMember(@PathVariable("id") Long seq, @RequestBody MemberDto memberDto){
         memberService.modifyMember(seq, memberDto);
@@ -103,10 +103,17 @@ public class MemberController {
 
     }
 
-
     //03-5. delete : 회원삭제
+    @DeleteMapping("/account/{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable("id") Long seq){
+        memberService.removeMember(seq);
+        return null;
+    }
 
 
     //03-6. get: 회원목록다운로드
+
+
+
 
 }

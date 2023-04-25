@@ -90,7 +90,8 @@ public class MemberService {
         //예외처리 통과 시 db저장: dao -> repository
         MemberEntity saved = memberDao.registerMember(memberEntity);
         log.info("saved: " + saved.toString());
-        return null;
+        MemberDto savedDto = saved.toDto();
+        return savedDto;
     }
 
     //03-3. authenticate : 로그인
@@ -98,16 +99,16 @@ public class MemberService {
     //need005. 존재하지 않는 아이디
     //need006. 아이디와 비밀번호가 일치하지 않을 때
     public MemberDto authenticateMember(LoginRequest loginRequest) {
-        log.info(loginRequest.toString());
 
         //예외처리 ->아직안됨
-        Optional<MemberEntity> matchingMember = memberRepository.findByIdAndPw(loginRequest.getUserId(), loginRequest.getUserPw());
+        Optional<MemberEntity> matchingMember = memberRepository.findByIdAndPw(loginRequest.getId(), loginRequest.getPw());
         log.info(matchingMember.toString());
 
         //예외처리 통과시 db에서 확인
         MemberEntity loginMember = matchingMember.get();
         log.info(loginMember.toString());
-        return null;
+        MemberDto loginDto = loginMember.toDto();
+        return loginDto;
 
 
     }
@@ -132,10 +133,23 @@ public class MemberService {
         memberDao.modifyMember(memberEntity);
     }
 
-
-
-
     //03-5. remove : 회원삭제
+    public void removeMember(Long seq) {
+        //예외처리-id에 해당하는 회원이 없는 경우,서버에러(404)
+        Optional<MemberEntity> member = memberDao.findMember(seq);
+        log.info(member.toString());
+
+        if(member.isEmpty()){
+            throw new AppException(ErrorCode.MEMBER_NOT_FOUND);
+        };
+
+        //예외처리 통과 시
+       memberDao.removeMember(member.get());
+    }
+
+
+
+
 
     //03-6. download : 회원목록다운로드
 

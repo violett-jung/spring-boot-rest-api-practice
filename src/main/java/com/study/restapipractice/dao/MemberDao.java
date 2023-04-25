@@ -61,11 +61,10 @@ public class MemberDao {
 
     }
 
-
-
-
     //03-5. remove : 회원삭제
-
+    public void removeMember(MemberEntity memberEntity) {
+        memberRepository.delete(memberEntity);
+    }
 
     //03-6. download : 회원목록다운로드
 
