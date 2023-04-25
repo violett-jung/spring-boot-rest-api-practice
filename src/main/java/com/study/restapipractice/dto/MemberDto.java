@@ -43,7 +43,7 @@ public class MemberDto {
 
 //    @Pattern.List({
 //            @Pattern(regexp = "^$"), // 빈 문자열 허용
-//            @Pattern(regexp = "^01([0|1|6|7|8|9])(\\d{3,4})(\\d{4})$", message = "핸드폰 번호는 010-1234-5678 형식으로 입력해주세요.")
+//            @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "핸드폰 번호는 010-1234-5678 형식으로 입력해주세요.")
 //    })
     private String hp; //(옵션)폰번호
 

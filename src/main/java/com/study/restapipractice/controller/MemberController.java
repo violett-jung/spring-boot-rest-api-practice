@@ -1,5 +1,6 @@
 package com.study.restapipractice.controller;
 
+import com.study.restapipractice.converter.CsvConverter;
 import com.study.restapipractice.dto.LoginRequest;
 import com.study.restapipractice.dto.MemberDto;
 
@@ -8,11 +9,14 @@ import com.study.restapipractice.repository.MemberRepository;
 import com.study.restapipractice.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -110,10 +114,14 @@ public class MemberController {
         return null;
     }
 
-
     //03-6. get: 회원목록다운로드
-
-
-
+    @GetMapping(value = "/download-binary", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> downloadCsvBinary() throws IOException {
+        List<MemberDto> members = memberService.findMembers();
+        byte[] csvBytes = CsvConverter.convertToCsvBinary(members);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=members.csv");
+        return ResponseEntity.ok().headers(headers).body(csvBytes);
+    }
 
 }
