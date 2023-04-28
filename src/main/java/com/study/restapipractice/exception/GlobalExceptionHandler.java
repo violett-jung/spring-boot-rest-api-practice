@@ -2,6 +2,7 @@ package com.study.restapipractice.exception;
 
 import com.study.restapipractice.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -9,6 +10,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @RestControllerAdvice
 /*전역적으로 예외 처리가능
@@ -41,12 +48,23 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-//        String errorMessage = bindingResult.getFieldErrors().get(0).getDefaultMessage();
-        FieldError fieldError = bindingResult.getFieldErrors().get(0);
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
-        log.error("error : ", bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        FieldError fieldError = fieldErrors.get(0);
+
+        log.error("error " + fieldError.getField() + ":" + fieldError.getDefaultMessage(), fieldError.getDefaultMessage());
         return ErrorResponse.toResponseEntity(fieldError, ErrorCode.BAD_REQUEST_ERROR);
 
     }
+
+
+
+
+
+
+
+
+
+
 
 }

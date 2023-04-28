@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -86,7 +87,7 @@ public class MemberController {
     //03-2. post : 회원등록
     //회원등록 만들면서 controller에서 전부 처리하던 service, repository 단계별 구분
     @PostMapping("/account")
-    public ResponseEntity<?> createMember(@RequestBody @Valid MemberDto memberDto){
+    public ResponseEntity<?> createMember(@Validated @RequestBody MemberDto memberDto){
         MemberDto savedMember = memberService.registerMember(memberDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
     }
