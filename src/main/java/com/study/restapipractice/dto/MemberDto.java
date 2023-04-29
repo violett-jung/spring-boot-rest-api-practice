@@ -51,7 +51,7 @@ public class MemberDto {
     * */
 
     private Long seq; //식별자
-
+    @Order(1)
     @NotBlank //null,""," " 모두 안됨
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ID는 영어 대소문자와 숫자만 가능합니다.")
     private String id; //id
