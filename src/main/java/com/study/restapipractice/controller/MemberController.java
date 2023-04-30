@@ -111,7 +111,7 @@ public class MemberController {
 
     //03-3. post : 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> loginMember(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> loginMember(@Validated(ValidationSequence.class) @RequestBody LoginRequest loginRequest){
         log.info(loginRequest.toString());
         MemberDto memberDto = memberService.authenticateMember(loginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(memberDto);
@@ -128,7 +128,7 @@ public class MemberController {
     @DeleteMapping("/account/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable("id") Long seq){
         memberService.removeMember(seq);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     //03-6. get: 회원목록다운로드
