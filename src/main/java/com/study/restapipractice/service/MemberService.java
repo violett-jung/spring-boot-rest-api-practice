@@ -105,6 +105,9 @@ public class MemberService {
         //예외처리 ->아직안됨
         Optional<MemberEntity> matchingMember = memberRepository.findByIdAndPw(loginRequest.getId(), loginRequest.getPw());
         log.info(matchingMember.toString());
+        if(matchingMember.isEmpty()){
+            throw new AppException(ErrorCode.UNAUTHORIZED_MEMBER);
+        }
 
         //예외처리 통과시 db에서 확인
         MemberEntity loginMember = matchingMember.get();
