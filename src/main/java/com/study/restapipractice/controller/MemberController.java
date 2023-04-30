@@ -9,6 +9,7 @@ import com.study.restapipractice.exception.ErrorCode;
 import com.study.restapipractice.exception.ErrorResponse;
 import com.study.restapipractice.repository.MemberRepository;
 import com.study.restapipractice.service.MemberService;
+import com.study.restapipractice.validation.ValidationSequence;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -92,15 +93,21 @@ public class MemberController {
     //03-2. post : 회원등록
     //회원등록 만들면서 controller에서 전부 처리하던 service, repository 단계별 구분
     @PostMapping("/account")
-    public ResponseEntity<?> createMember(@Valid @RequestBody MemberDto memberDto,  BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            FieldError fieldError = bindingResult.getFieldError();
-//            return ResponseEntity.badRequest().body(fieldError.getDefaultMessage());
-            return ErrorResponse.toResponseEntity(fieldError, ErrorCode.BAD_REQUEST_ERROR);
-        }
+    public ResponseEntity<?> createMember(@Validated(ValidationSequence.class) @RequestBody MemberDto memberDto){
         MemberDto savedMember = memberService.registerMember(memberDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
     }
+
+//    @PostMapping("/account")
+//    public ResponseEntity<?> createMember(@Validated(ValidationSequence.class) @RequestBody MemberDto memberDto, BindingResult bindingResult){
+//        if (bindingResult.hasErrors()) {
+//            FieldError fieldError = bindingResult.getFieldError();
+////            return ResponseEntity.badRequest().body(fieldError.getDefaultMessage());
+//            return ErrorResponse.toResponseEntity(fieldError, ErrorCode.BAD_REQUEST_ERROR);
+//        }
+//        MemberDto savedMember = memberService.registerMember(memberDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
+//    }
 
     //03-3. post : 로그인
     @PostMapping("/login")

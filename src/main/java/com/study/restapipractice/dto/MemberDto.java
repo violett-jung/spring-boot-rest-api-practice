@@ -10,6 +10,7 @@ import com.study.restapipractice.data.RoleType;
 import com.study.restapipractice.data.StateType;
 import com.study.restapipractice.entity.MemberEntity;
 import com.study.restapipractice.util.JsonUtil;
+import com.study.restapipractice.validation.ValidationGroups.*;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
@@ -51,22 +52,22 @@ public class MemberDto {
     * */
 
     private Long seq; //식별자
-    @Order(1)
-    @NotBlank //null,""," " 모두 안됨
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ID는 영어 대소문자와 숫자만 가능합니다.")
+
+    @NotBlank(groups = NotBlankGroupId.class) //null,""," " 모두 안됨
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "ID는 영어 대소문자와 숫자만 가능합니다.", groups = PatternCheckGroupId.class)
     private String id; //id
 
 
-    @NotBlank
+    @NotBlank(groups = NotBlankGroupPw.class)
     private String pw; //pw
 
 
-    @NotBlank
+    @NotBlank(groups = NotBlankGroupName.class)
     private String name; //이름
 
 
-    @NotBlank
-    @Email
+    @NotBlank(groups = NotBlankGroupEmail.class)
+    @Email(groups = EmailCheckGroup.class)
     private String email; //메일주소
 
 
@@ -88,19 +89,16 @@ public class MemberDto {
      * */
 
 
-    @NotNull //원래 null만 검증실패여야하는데 null,""," " 모두 검증실패(이유: Jackson의 자동 변환 기능때문이었음)
-    @Min(value = 1, message = "접근 권한은 1 또는 2이어야 합니다.")
-    @Max(value = 2, message = "접근 권한은 1 또는 2이어야 합니다.")
+    @NotNull(groups = NotNullGroupRole.class) //원래 null만 검증실패여야하는데 null,""," " 모두 검증실패(이유: Jackson의 자동 변환 기능때문이었음)
+    @Min(value = 1, message = "접근 권한은 1 또는 2이어야 합니다.", groups = MinValueCheckGroupRole.class)
+    @Max(value = 2, message = "접근 권한은 1 또는 2이어야 합니다.", groups = MaxValueCheckGroupRole.class)
     private Integer role; //접근권한(1 관리자, 2 일반인)
 
-
-    @NotNull
-    @Min(value = 1, message = "활성화는 1 또는 2이어야 합니다.")
-    @Max(value = 2, message = "활성화는 1 또는 2이어야 합니다.")
+    @NotNull(groups = NotNullGroupRole.class)
+    @Min(value = 1, message = "접근 권한은 1 또는 2이어야 합니다.", groups = MinValueCheckGroupState.class)
+    @Max(value = 2, message = "접근 권한은 1 또는 2이어야 합니다.", groups = MaxValueCheckGroupState.class)
     private Integer state; //활성화(1 활성화, 2 비활성화)
 
-
-    @NotBlank
     private String description; //(옵션)설명
 
     public MemberEntity toEntity(){

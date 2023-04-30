@@ -49,12 +49,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-
         FieldError fieldError = fieldErrors.get(0);
-
         log.error("error " + fieldError.getField() + ":" + fieldError.getDefaultMessage(), fieldError.getDefaultMessage());
         return ErrorResponse.toResponseEntity(fieldError, ErrorCode.BAD_REQUEST_ERROR);
-
     }
 
 
