@@ -115,7 +115,7 @@ public class MemberService {
 
     }
     //03-4. modify : 회원수정
-    public void modifyMember(Long id, MemberDto memberDto) {
+    public MemberDto modifyMember(Long id, MemberDto memberDto) {
         //1.수정용 엔티티로 변환
         MemberEntity modifyEntity = memberDto.toEntity();
 
@@ -124,7 +124,14 @@ public class MemberService {
         MemberEntity memberEntity = matchingMember.get();
         log.info(memberEntity.toString());
 
+        memberEntity.setPw(modifyEntity.getPw());
         memberEntity.setName(modifyEntity.getName());
+        memberEntity.setEmail(modifyEntity.getEmail());
+        memberEntity.setHp(modifyEntity.getHp());
+        memberEntity.setDescription(modifyEntity.getDescription());
+        memberEntity.setRole(modifyEntity.getRole());
+        memberEntity.setState(modifyEntity.getState());
+
         //예외처리
         //need008. 존재하는 계정 아님
         //need009. pathvariable로 받은 seq와 수정용엔티티의 seq가 다를 경우
@@ -132,7 +139,9 @@ public class MemberService {
         //need010. 입력하려는 데이터의 형식이 맞지 않을 때
 
         //3. 업데이트
-        memberDao.modifyMember(memberEntity);
+        MemberEntity updatedMember = memberDao.modifyMember(memberEntity);
+        MemberDto updatedMemberDto = updatedMember.toDto();
+        return updatedMemberDto;
     }
 
     //03-5. remove : 회원삭제

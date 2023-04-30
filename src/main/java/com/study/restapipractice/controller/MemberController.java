@@ -119,9 +119,9 @@ public class MemberController {
 
     //03-4. put : 회원수정 //고쳐야함
     @PutMapping("/account/{id}")
-    public ResponseEntity<?> updateMember(@PathVariable("id") Long seq, @RequestBody MemberDto memberDto){
-        memberService.modifyMember(seq, memberDto);
-        return null;
+    public ResponseEntity<?> updateMember(@PathVariable("id") Long seq, @Validated(ValidationSequence.class) @RequestBody MemberDto memberDto){
+        MemberDto updatedMember = memberService.modifyMember(seq, memberDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     //03-5. delete : 회원삭제
