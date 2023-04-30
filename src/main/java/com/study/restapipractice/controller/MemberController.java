@@ -42,9 +42,9 @@ public class MemberController {
     //need001~need011
     //002번까지 처리
 
-    //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
-    @Autowired
-    private MemberRepository memberRepository;
+//    //임시로 컨트롤러에서 repository 사용, 추후 없앨예정
+//    @Autowired
+//    private MemberRepository memberRepository;
 
     //service 단계 추가
     private MemberService memberService;
@@ -132,7 +132,7 @@ public class MemberController {
     }
 
     //03-6. get: 회원목록다운로드
-    @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/account/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<byte[]> downloadCsvBinary() throws IOException {
         byte[] csvBytes = memberService.exportMembersToBinary();
         HttpHeaders headers = new HttpHeaders();
